@@ -1,0 +1,11 @@
+[project]
+name = "learn-genai"
+version = "0.1.0"
+description = "Learn GenAI Step-wise"
+readme = "README.rst"
+requires-python = "==3.13.*"
+dependencies = [
+    "google-genai==2.23.0",
+    "python-dotenv>=1.2.3",
+    "pyyaml>=6.0.3",
+]
