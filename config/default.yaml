@@ -2,7 +2,7 @@ ex01:
   gemini_model: gemini-3.6-flash
   mode: stream  # text | stream
 ex02:
-  force_initialize: true
+  force_initialize: false
   select_category: consumable-perishables  # consumable-perishables | consumable-nonperishables | general-merchandise | specific-brands | severe-issues | clothing-footwear
-  search_1: Tell me about jeans and business casual
+  query_with_used_words: How do I raise a complaint?
   search_2: What are the clothing rules?

@@ -219,3 +219,6 @@ __marimo__/
 
 # Private
 private/
+
+# SQLite files that are created by app
+.sqlite3

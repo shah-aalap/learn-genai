@@ -1,5 +1,6 @@
 import sqlite3
 from pathlib import Path
+import re
 from typing import Self
 import polars as pl
 from example_lib import ExampleClass
@@ -9,13 +10,35 @@ from example_lib import ExampleClass
 
 
 class MainClass(ExampleClass):
+    SKIP_WORDS = ["a", "an", "the",
+                  "how", "what", "why",
+                  "is", "are", "am",
+                  "i", "me", "you", "he", "him", "she", "her", "they", "them",
+                  "should", "can", "could", "will", "would", "may", "might", "do", "did",
+                  "to", "from", "about",
+                  "this", "that"]
+
     def __init__(self, config_path: str | Path) -> None:
         super().__init__(config=config_path)
         self._initialize()
         self._print_db()
 
     def run(self) -> Self:
+        self._query_with_used_words()
         return self
+
+    def _query_with_used_words(self) -> None:
+        self._l.info("-" * 80)
+        self._l.info("Querying with used words...")
+        self._l.info(f"The skip words used are: {", ".join(self.SKIP_WORDS)}")
+        query = self._config["query_with_used_words"]
+        self._l.info(f"Query: {query}")
+
+        query_cleaned = re.sub(r"[.!?,:;_=+{}()<>\-\[\]]", " ", query.lower())
+        words_lc = [word for word in query_cleaned.split()
+                    if word not in self.SKIP_WORDS]
+        self._l.info(f"Searching for words: {", ".join(words_lc)}")
+
 
     def _initialize(self) -> None:
         db_path = Path(__file__).parent / "resources" / f"{self._example_num}.sqlite3"
@@ -64,4 +87,5 @@ class MainClass(ExampleClass):
         with pl.Config(fmt_str_lengths=200,
                        tbl_hide_dataframe_shape=True,
                        tbl_hide_column_data_types=True):
-            self._l.info(f"Category '{self._config["select_category"]}' was selected from 'return_policies':\n{df}")
+            self._l.info(f"Category '{self._config["select_category"]}' was selected from 'return_policies', "
+                         f" You can change this key in configuration file '{self._example_dir_path}', key '{self._example_num}.select_category'\n{df}")
