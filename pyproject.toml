@@ -5,7 +5,10 @@ description = "Learn GenAI Step-wise"
 readme = "README.rst"
 requires-python = "==3.13.*"
 dependencies = [
+    "chromadb>=1.5.9",
     "google-genai==2.23.0",
+    "polars>=1.44.2",
     "python-dotenv>=1.2.3",
     "pyyaml>=6.0.3",
+    "sentence-transformers>=6.0.1",
 ]

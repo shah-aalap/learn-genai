@@ -19,7 +19,6 @@ class MainClass(ExampleClass):
             self._generate_stream()
         return self
 
-
     def _generate_text(self) -> Self:
         self._l.info(f"Generating non-streaming content")
         question = "Explain quantum computing in one short sentence."
@@ -30,7 +29,6 @@ class MainClass(ExampleClass):
         self._l.info(f"Question: {question}")
         self._l.info(f"Response: {response.text}")
         return self
-
 
     # 3. Make a streaming text generation call (for real-time responses)
     def _generate_stream(self) -> Self:

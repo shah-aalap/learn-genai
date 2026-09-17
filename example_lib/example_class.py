@@ -15,15 +15,15 @@ class ExampleClass:
         load_dotenv(dotenv_path=".env", override=True)
 
         example_dir = self.__class__.__module__.split(".")[-2]
+        self._example_dir_path = Path(__file__).parent.parent / example_dir
         self._example_num = self.EXAMPLE_NUM_RE.match(example_dir).group()
 
-        self._name = (f"{Path(__file__).parent.parent.name}"
+        self._class_name = (f"{Path(__file__).parent.parent.name}"
                       f".{example_dir}"
                       f".{self.__class__.__name__}")
 
-        self._l = logging.getLogger(f"{self._name}")
+        self._l = logging.getLogger(f"{self._class_name}")
         self._l.info(f"Initializing example '{self._example_num}'")
-
 
         if isinstance(config, (str, Path)):
             config_path = Path(config).resolve().absolute()
@@ -40,3 +40,4 @@ class ExampleClass:
             raise ValueError(f"Example number key '{self._example_num}' not found in config")
 
         self._config = config[self._example_num]
+        self._l.info(f"Using configuration file '{config_path}', key '{self._example_num}'")
